@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+            background: #1a2332;
+            background-image: url('https://ar-hosting.pages.dev/1767359561536.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 35, 50, 0.85);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 15px 30px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-image: url('https://ar-hosting.pages.dev/1767225989304.jpg');
+            background-size: cover;
+            background-position: center;
+            background-color: #c4d82e;
+            margin: 0 auto 20px;
+            border: 4px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+            padding: 0 10px;
+        }
+
+        .menu-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1.5px solid rgba(255,255,255,0.1);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .menu-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(5px);
+            border-color: rgba(100,200,255,0.5);
+        }
+
+        .menu-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
+            background-color: rgba(196, 216, 46, 0.3);
+        }
+
+        .menu-text {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+            flex: 1;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+            padding: 20px 10px;
+            box-sizing: border-box;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: rgba(30, 40, 55, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 2px solid rgba(100,200,255,0.3);
+            animation: slideUp 0.3s;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-title {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .info-item {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .info-label {
+            color: #c4d82e;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            color: white;
+            font-size: 16px;
+            word-break: break-word;
+        }
+
+        .option-btn {
+            background: rgba(100,200,255,0.2);
+            border: 2px solid rgba(100,200,255,0.4);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .option-btn:hover {
+            background: rgba(100,200,255,0.4);
+            border-color: rgba(100,200,255,0.6);
+            transform: scale(1.01);
+        }
+
+        /* Hamburger Menu */
+        .hamburger-menu {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1001;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hamburger-icon {
+            width: 24px;
+            height: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            width: 100%;
+        }
+
+        /* Sidebar Menu */
+        .sidebar-menu {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 280px;
+            height: 100%;
+            background: rgba(30, 40, 55, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1002;
+            padding: 70px 15px 20px;
+            transition: right 0.3s ease;
+            border-left: 1px solid rgba(100,200,255,0.3);
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .sidebar-menu.active {
+            right: 0;
+        }
+
+        .sidebar-item {
+            color: white;
+            padding: 14px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            box-sizing: border-box;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(-3px);
+        }
+
+        /* Login Form */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-input {
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #c4d82e;
+        }
+
+        .login-btn {
+            background: #c4d82e;
+            color: #1a2332;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .login-btn:hover {
+            background: #d4e85e;
+            transform: scale(1.01);
+        }
+
+        /* Management Styles */
+        .management-section {
+            display: none;
+        }
+
+        .management-section.active {
+            display: block;
+        }
+
+        .management-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            font-weight: 600;
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: #c4d82e;
+            color: #1a2332;
+        }
+
+        .tab-content {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            align-items: flex-end;
+        }
+
+        .form-row input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .add-btn, .delete-btn {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .add-btn {
+            background: #4CAF50;
+            color: white;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .delete-btn {
+            background: #f44336;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .add-btn:hover {
+            background: #45a049;
+        }
+
+        .delete-btn:hover {
+            background: #d32f2f;
+        }
+
+        .image-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            margin: 10px auto;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .save-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 15px;
+            box-sizing: border-box;
+        }
+
+        .save-btn:hover {
+            background: #1976D2;
+            transform: scale(1.01);
+        }
+
+        /* Dynamic About Me Items */
+        .about-item {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .about-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .about-row input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .about-row input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Status Messages */
+        .status-message {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        /* Overlay untuk loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #c4d82e;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .container {
+                padding: 50px 12px 25px;
+            }
+            
+            .profile-pic {
+                width: 100px;
+                height: 100px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .menu-text {
+                font-size: 16px;
+            }
+            
+            .modal-content {
+                padding: 20px 15px;
+                margin-top: 10px;
+            }
+            
+            .modal-title {
+                font-size: 20px;
+            }
+            
+            .sidebar-menu {
+                width: 250px;
+            }
+            
+            .tab-btn {
+                font-size: 12px;
+                padding: 6px 8px;
+                min-width: 70px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .menu-text {
+                font-size: 15px;
+            }
+            
+            .menu-icon {
+                width: 45px;
+                height: 45px;
+                margin-right: 12px;
+            }
+            
+            .tab-btn {
+                font-size: 11px;
+                padding: 5px 6px;
+                min-width: 65px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu" onclick="toggleSidebar()">
+        <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-item" onclick="showAboutMe(); closeSidebar()">About Me</div>
+        <div class="sidebar-item" onclick="showKontak(); closeSidebar()">Kontak</div>
+        <div class="sidebar-item" onclick="showEmail(); closeSidebar()">Email</div>
+        <div class="sidebar-item" onclick="showSosmed(); closeSidebar()">Sosmed</div>
+        <div class="sidebar-item" onclick="showGrupWA(); closeSidebar()">Grup Whatsapp</div>
+        <div class="sidebar-item" onclick="showMyAccount(); closeSidebar()">My Account</div>
+    </div>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-pic" id="mainProfilePic"></div>
+            <h1>My Profile</h1>
+        </div>
+
+        <!-- Menu Cards -->
+        <div class="menu-card" onclick="showAboutMe()">
+            <div class="menu-icon" id="aboutIcon"></div>
+            <div class="menu-text">About Me</div>
+        </div>
+
+        <div class="menu-card" onclick="showKontak()">
+            <div class="menu-icon" id="contactIcon"></div>
+            <div class="menu-text">Kontak</div>
+        </div>
+
+        <div class="menu-card" onclick="showEmail()">
+            <div class="menu-icon" id="emailIcon"></div>
+            <div class="menu-text">Email</div>
+        </div>
+
+        <div class="menu-card" onclick="showSosmed()">
+            <div class="menu-icon" id="socialIcon"></div>
+            <div class="menu-text">Sosmed</div>
+        </div>
+
+        <div class="menu-card" onclick="showGrupWA()">
+            <div class="menu-icon" id="waIcon"></div>
+            <div class="menu-text">Grup Whatsapp</div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="modalAboutMe" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">About Me</div>
+                <button class="close-btn" onclick="closeModal('modalAboutMe')">×</button>
+            </div>
+            <div id="aboutMeContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="modalKontak" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Kontak</div>
+                <button class="close-btn" onclick="closeModal('modalKontak')">×</button>
+            </div>
+            <div id="contactContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="modalEmail" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Email</div>
+                <button class="close-btn" onclick="closeModal('modalEmail')">×</button>
+            </div>
+            <div id="emailContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="modalSosmed" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Sosmed</div>
+                <button class="close-btn" onclick="closeModal('modalSosmed')">×</button>
+            </div>
+            <div id="socialContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="modalGrupWA" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Grup WhatsApp</div>
+                <button class="close-btn" onclick="closeModal('modalGrupWA')">×</button>
+            </div>
+            <div id="waContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Login -->
+    <div id="modalLogin" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Login My Account</div>
+                <button class="close-btn" onclick="closeModal('modalLogin')">×</button>
+            </div>
+            <form class="login-form" onsubmit="login(event)">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Management -->
+    <div id="modalManagement" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <div class="modal-title">Profile Management</div>
+                <button class="close-btn" onclick="closeModal('modalManagement')">×</button>
+            </div>
+            
+            <div id="statusMessage" class="status-message" style="display:none;"></div>
+            
+            <div class="management-tabs">
+                <button class="tab-btn active" onclick="showTab('aboutTab')">About Me</button>
+                <button class="tab-btn" onclick="showTab('contactTab')">Kontak</button>
+                <button class="tab-btn" onclick="showTab('emailTab')">Email</button>
+                <button class="tab-btn" onclick="showTab('socialTab')">Sosmed</button>
+                <button class="tab-btn" onclick="showTab('waTab')">Grup WA</button>
+                <button class="tab-btn" onclick="showTab('imagesTab')">Images</button>
+            </div>
+
+            <!-- About Me Tab -->
+            <div id="aboutTab" class="management-section active">
+                <div class="tab-content">
+                    <div id="aboutList">
+                        <!-- Dynamic about items will be loaded here -->
+                    </div>
+                    <button type="button" class="add-btn" onclick="addAboutItem()">Tambah About Item</button>
+                </div>
+            </div>
+
+            <!-- Contact Tab -->
+            <div id="contactTab" class="management-section">
+                <div class="tab-content">
+                    <div id="contactList">
+                        <!-- Dynamic contact items will be loaded here -->
+                    </div>
+                    <button type="button" class="add-btn" onclick="addContactItem()">Tambah Kontak</button>
+                </div>
+            </div>
+
+            <!-- Email Tab -->
+            <div id="emailTab" class="management-section">
+                <div class="tab-content">
+                    <div id="emailList">
+                        <!-- Dynamic email items will be loaded here -->
+                    </div>
+                    <button type="button" class="add-btn" onclick="addEmailItem()">Tambah Email</button>
+                </div>
+            </div>
+
+            <!-- Social Tab -->
+            <div id="socialTab" class="management-section">
+                <div class="tab-content">
+                    <div id="socialList">
+                        <!-- Dynamic social items will be loaded here -->
+                    </div>
+                    <button type="button" class="add-btn" onclick="addSocialItem()">Tambah Sosmed</button>
+                </div>
+            </div>
+
+            <!-- WA Group Tab -->
+            <div id="waTab" class="management-section">
+                <div class="tab-content">
+                    <div id="waList">
+                        <!-- Dynamic WA group items will be loaded here -->
+                    </div>
+                    <button type="button" class="add-btn" onclick="addWAItem()">Tambah Grup WA</button>
+                </div>
+            </div>
+
+            <!-- Images Tab -->
+            <div id="imagesTab" class="management-section">
+                <div class="tab-content">
+                    <div class="form-group">
+                        <label class="form-label">Profile Picture (Bulat)</label>
+                        <input type="text" class="form-input" id="editProfilePic" placeholder="URL Gambar">
+                        <div class="image-preview" id="profilePicPreview"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">About Me Icon (Kotak)</label>
+                        <input type="text" class="form-input" id="editAboutIcon" placeholder="URL Gambar">
+                        <div class="image-preview" id="aboutIconPreview"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Icon (Kotak)</label>
+                        <input type="text" class="form-input" id="editContactIcon" placeholder="URL Gambar">
+                        <div class="image-preview" id="contactIconPreview"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Icon (Kotak)</label>
+                        <input type="text" class="form-input" id="editEmailIcon" placeholder="URL Gambar">
+                        <div class="image-preview" id="emailIconPreview"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Social Icon (Kotak)</label>
+                        <input type="text" class="form-input" id="editSocialIcon" placeholder="URL Gambar">
+                        <div class="image-preview" id="socialIconPreview"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">WA Group Icon (Kotak)</label>
+                        <input type="text" class="form-input" id="editWAIcon" placeholder="URL Gambar">
+                        <div class="image-preview" id="waIconPreview"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="save-btn" onclick="saveData()">Simpan Perubahan</button>
+        </div>
+    </div>
+
+    <script>
+        // Bin JSON Configuration
+        const BIN_ID = '6957fc6e43b1c97be914b554';
+        const X_MASTER_KEY = '$2a$10$Vmoh.3UIQA4k86DVG/44lu4.xo69qr5A1pKmDpF5NtxWAKHjGlkwO';
+        const X_ACCESS_KEY = '$2a$10$6fQtDpm6PKhldXE9GSr.kepupjk9J4ZORoD8FUGzF3QtK1bgepyva';
+        const BASE_URL = 'https://api.jsonbin.io/v3/b';
+        
+        // Default data
+        let profileData = {
+            about: [
+                { label: "Nama", value: "Ilham Fadilah" },
+                { label: "Panggilan", value: "Ilham - Katyusha" },
+                { label: "Nick Name Google Play", value: "INDO MIE HQQ 331" }
+            ],
+            contacts: [
+                { label: "WhatsApp 1", value: "https://wa.me/6289604270322" },
+                { label: "WhatsApp 2", value: "https://wa.me/79522843622" }
+            ],
+            emails: [
+                { label: "Email 1", value: "Bow1cia@gmail.com" },
+                { label: "Email 2", value: "Neoveloxi@gmail.com" }
+            ],
+            social: [
+                { label: "Instagram", value: "https://www.instagram.com/IlhamFadilah720.bgr" }
+            ],
+            waGroups: [
+                { label: "Grup WhatsApp 1", value: "https://chat.whatsapp.com/EXAMPLE1" },
+                { label: "Grup WhatsApp 2", value: "https://chat.whatsapp.com/EXAMPLE2" },
+                { label: "Grup WhatsApp 3", value: "https://chat.whatsapp.com/EXAMPLE3" }
+            ],
+            images: {
+                profile: "https://ar-hosting.pages.dev/1767225989304.jpg",
+                about: "https://ar-hosting.pages.dev/1767225989304.jpg",
+                contact: "https://ar-hosting.pages.dev/1767225989304.jpg",
+                email: "https://ar-hosting.pages.dev/1767225989304.jpg",
+                social: "https://ar-hosting.pages.dev/1767225989304.jpg",
+                wa: "https://ar-hosting.pages.dev/1767225989304.jpg"
+            }
+        };
+
+        // Show loading overlay
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        // Hide loading overlay
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Show status message
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = `status-message ${type}`;
+            statusEl.style.display = 'block';
+            
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
+        }
+
+        // Load data dengan fallback ke localStorage
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem('profileData');
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error('Error loading from localStorage:', e);
+            }
+            return null;
+        }
+
+        // Save to localStorage
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('profileData', JSON.stringify(profileData));
+                return true;
+            } catch (e) {
+                console.error('Error saving to localStorage:', e);
+                return false;
+            }
+        }
+
+        // Load data from JSONBin on page load
+        async function loadData() {
+            showLoading();
+            
+            // Coba load dari localStorage dulu
+            const localData = loadFromLocalStorage();
+            if (localData) {
+                profileData = localData;
+                showStatus('Data dimuat dari penyimpanan lokal', 'success');
+                updateUI();
+                hideLoading();
+                return;
+            }
+            
+            // Jika tidak ada di localStorage, coba dari JSONBin
+            try {
+                const response = await fetch(`${BASE_URL}/${BIN_ID}/latest`, {
+                    headers: {
+                        'X-Master-Key': X_MASTER_KEY,
+                        'X-Access-Key': X_ACCESS_KEY
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.record) {
+                        profileData = data.record;
+                        saveToLocalStorage();
+                        showStatus('Data berhasil dimuat dari server', 'success');
+                    }
+                } else {
+                    // Jika gagal, gunakan data default
+                    saveToLocalStorage();
+                    showStatus('Menggunakan data default', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                saveToLocalStorage();
+                showStatus('Menggunakan data default', 'error');
+            } finally {
+                updateUI();
+                hideLoading();
+            }
+        }
+
+        // Save data to JSONBin
+        async function saveData() {
+            showLoading();
+            
+            // Update profileData from form inputs
+            updateProfileDataFromForms();
+            
+            // Simpan ke localStorage dulu
+            saveToLocalStorage();
+            
+            // Coba simpan ke JSONBin
+            try {
+                const response = await fetch(`${BASE_URL}/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': X_MASTER_KEY,
+                        'X-Access-Key': X_ACCESS_KEY
+                    },
+                    body: JSON.stringify(profileData)
+                });
+                
+                if (response.ok) {
+                    updateUI();
+                    showStatus('Data berhasil disimpan!', 'success');
+                    setTimeout(() => {
+                        closeModal('modalManagement');
+                        hideLoading();
+                    }, 1500);
+                } else {
+                    showStatus('Data disimpan lokal, gagal ke server', 'error');
+                    setTimeout(() => {
+                        closeModal('modalManagement');
+                        hideLoading();
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error('Error saving data:', error);
+                showStatus('Data disimpan lokal, gagal ke server', 'error');
+                setTimeout(() => {
+                    closeModal('modalManagement');
+                    hideLoading();
+                }, 1500);
+            }
+        }
+
+        // Update UI with current data
+        function updateUI() {
+            // Update About Me modal
+            updateAboutMeModal();
+            
+            // Update Contact modal
+            updateContactModal();
+            
+            // Update Email modal
+            updateEmailModal();
+            
+            // Update Social modal
+            updateSocialModal();
+            
+            // Update WA Groups modal
+            updateWAModal();
+            
+            // Update images
+            updateImages();
+        }
+
+        // Update About Me modal
+        function updateAboutMeModal() {
+            const container = document.getElementById('aboutMeContent');
+            container.innerHTML = '';
+            
+            if (profileData.about && profileData.about.length > 0) {
+                profileData.about.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'info-item';
+                    div.innerHTML = `
+                        <div class="info-label">${item.label}</div>
+                        <div class="info-value">${item.value}</div>
+                    `;
+                    container.appendChild(div);
+                });
+            } else {
+                container.innerHTML = '<div class="info-item">Tidak ada data</div>';
+            }
+        }
+
+        // Update Contact modal
+        function updateContactModal() {
+            const container = document.getElementById('contactContent');
+            container.innerHTML = '';
+            
+            if (profileData.contacts && profileData.contacts.length > 0) {
+                profileData.contacts.forEach(item => {
+                    const btn = document.createElement('div');
+                    btn.className = 'option-btn';
+                    btn.innerHTML = `📱 ${item.label}`;
+                    btn.onclick = () => window.open(item.value, '_blank');
+                    container.appendChild(btn);
+                });
+            } else {
+                container.innerHTML = '<div class="info-item">Tidak ada data</div>';
+            }
+        }
+
+        // Update Email modal
+        function updateEmailModal() {
+            const container = document.getElementById('emailContent');
+            container.innerHTML = '';
+            
+            if (profileData.emails && profileData.emails.length > 0) {
+                profileData.emails.forEach(item => {
+                    const btn = document.createElement('div');
+                    btn.className = 'option-btn';
+                    btn.innerHTML = `✉️ ${item.label}`;
+                    btn.onclick = () => window.location.href = `mailto:${item.value}`;
+                    container.appendChild(btn);
+                });
+            } else {
+                container.innerHTML = '<div class="info-item">Tidak ada data</div>';
+            }
+        }
+
+        // Update Social modal
+        function updateSocialModal() {
+            const container = document.getElementById('socialContent');
+            container.innerHTML = '';
+            
+            if (profileData.social && profileData.social.length > 0) {
+                profileData.social.forEach(item => {
+                    const btn = document.createElement('div');
+                    btn.className = 'option-btn';
+                    btn.innerHTML = `📸 ${item.label}`;
+                    btn.onclick = () => window.open(item.value, '_blank');
+                    container.appendChild(btn);
+                });
+            } else {
+                container.innerHTML = '<div class="info-item">Tidak ada data</div>';
+            }
+        }
+
+        // Update WA Groups modal
+        function updateWAModal() {
+            const container = document.getElementById('waContent');
+            container.innerHTML = '';
+            
+            if (profileData.waGroups && profileData.waGroups.length > 0) {
+                profileData.waGroups.forEach(item => {
+                    const btn = document.createElement('div');
+                    btn.className = 'option-btn';
+                    btn.innerHTML = `💬 ${item.label}`;
+                    btn.onclick = () => window.open(item.value, '_blank');
+                    container.appendChild(btn);
+                });
+            } else {
+                container.innerHTML = '<div class="info-item">Tidak ada data</div>';
+            }
+        }
+
+        // Update images
+        function updateImages() {
+            // Update main profile picture
+            const mainProfilePic = document.getElementById('mainProfilePic');
+            if (mainProfilePic && profileData.images.profile) {
+                mainProfilePic.style.backgroundImage = `url('${profileData.images.profile}')`;
+            }
+            
+            // Update menu icons
+            const icons = [
+                { id: 'aboutIcon', url: profileData.images.about },
+                { id: 'contactIcon', url: profileData.images.contact },
+                { id: 'emailIcon', url: profileData.images.email },
+                { id: 'socialIcon', url: profileData.images.social },
+                { id: 'waIcon', url: profileData.images.wa }
+            ];
+            
+            icons.forEach(icon => {
+                const element = document.getElementById(icon.id);
+                if (element && icon.url) {
+                    element.style.backgroundImage = `url('${icon.url}')`;
+                }
+            });
+            
+            // Update preview images
+            updateImagePreviews();
+        }
+
+        // Update form inputs with current data
+        function updateForms() {
+            // Update About Me list
+            updateAboutList();
+            
+            // Update Contact list
+            updateContactList();
+            
+            // Update Email list
+            updateEmailList();
+            
+            // Update Social list
+            updateSocialList();
+            
+            // Update WA Groups list
+            updateWAList();
+            
+            // Update image inputs
+            updateImageInputs();
+            
+            // Update preview images
+            updateImagePreviews();
+        }
+
+        function updateAboutList() {
+            const container = document.getElementById('aboutList');
+            container.innerHTML = '';
+            
+            if (profileData.about && profileData.about.length > 0) {
+                profileData.about.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'about-item';
+                    div.innerHTML = `
+                        <div class="about-row">
+                            <input type="text" class="about-label" placeholder="Label (contoh: Nama)" value="${item.label || ''}" onchange="updateAboutItem(${index}, 'label', this.value)">
+                            <button class="delete-btn" type="button" onclick="removeAboutItem(${index})">Hapus</button>
+                        </div>
+                        <div class="about-row">
+                            <input type="text" class="about-value" placeholder="Value (contoh: Ilham Fadilah)" value="${item.value || ''}" onchange="updateAboutItem(${index}, 'value', this.value)">
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        function updateContactList() {
+            const container = document.getElementById('contactList');
+            container.innerHTML = '';
+            
+            if (profileData.contacts && profileData.contacts.length > 0) {
+                profileData.contacts.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'about-item';
+                    div.innerHTML = `
+                        <div class="about-row">
+                            <input type="text" class="contact-label" placeholder="Label (contoh: WhatsApp 1)" value="${item.label || ''}" onchange="updateContactItem(${index}, 'label', this.value)">
+                            <button class="delete-btn" type="button" onclick="removeContactItem(${index})">Hapus</button>
+                        </div>
+                        <div class="about-row">
+                            <input type="text" class="contact-value" placeholder="URL WhatsApp" value="${item.value || ''}" onchange="updateContactItem(${index}, 'value', this.value)">
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        function updateEmailList() {
+            const container = document.getElementById('emailList');
+            container.innerHTML = '';
+            
+            if (profileData.emails && profileData.emails.length > 0) {
+                profileData.emails.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'about-item';
+                    div.innerHTML = `
+                        <div class="about-row">
+                            <input type="text" class="email-label" placeholder="Label (contoh: Email 1)" value="${item.label || ''}" onchange="updateEmailItem(${index}, 'label', this.value)">
+                            <button class="delete-btn" type="button" onclick="removeEmailItem(${index})">Hapus</button>
+                        </div>
+                        <div class="about-row">
+                            <input type="email" class="email-value" placeholder="Alamat Email" value="${item.value || ''}" onchange="updateEmailItem(${index}, 'value', this.value)">
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        function updateSocialList() {
+            const container = document.getElementById('socialList');
+            container.innerHTML = '';
+            
+            if (profileData.social && profileData.social.length > 0) {
+                profileData.social.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'about-item';
+                    div.innerHTML = `
+                        <div class="about-row">
+                            <input type="text" class="social-label" placeholder="Label (contoh: Instagram)" value="${item.label || ''}" onchange="updateSocialItem(${index}, 'label', this.value)">
+                            <button class="delete-btn" type="button" onclick="removeSocialItem(${index})">Hapus</button>
+                        </div>
+                        <div class="about-row">
+                            <input type="text" class="social-value" placeholder="URL Sosial Media" value="${item.value || ''}" onchange="updateSocialItem(${index}, 'value', this.value)">
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        function updateWAList() {
+            const container = document.getElementById('waList');
+            container.innerHTML = '';
+            
+            if (profileData.waGroups && profileData.waGroups.length > 0) {
+                profileData.waGroups.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'about-item';
+                    div.innerHTML = `
+                        <div class="about-row">
+                            <input type="text" class="wa-label" placeholder="Label (contoh: Grup WhatsApp 1)" value="${item.label || ''}" onchange="updateWAItem(${index}, 'label', this.value)">
+                            <button class="delete-btn" type="button" onclick="removeWAItem(${index})">Hapus</button>
+                        </div>
+                        <div class="about-row">
+                            <input type="text" class="wa-value" placeholder="URL Grup WhatsApp" value="${item.value || ''}" onchange="updateWAItem(${index}, 'value', this.value)">
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        function updateImageInputs() {
+            if (!profileData.images) profileData.images = {};
+            
+            document.getElementById('editProfilePic').value = profileData.images.profile || '';
+            document.getElementById('editAboutIcon').value = profileData.images.about || '';
+            document.getElementById('editContactIcon').value = profileData.images.contact || '';
+            document.getElementById('editEmailIcon').value = profileData.images.email || '';
+            document.getElementById('editSocialIcon').value = profileData.images.social || '';
+            document.getElementById('editWAIcon').value = profileData.images.wa || '';
+        }
+
+        function updateImagePreviews() {
+            if (!profileData.images) profileData.images = {};
+            
+            const images = profileData.images;
+            
+            const previews = [
+                { id: 'profilePicPreview', url: images.profile },
+                { id: 'aboutIconPreview', url: images.about },
+                { id: 'contactIconPreview', url: images.contact },
+                { id: 'emailIconPreview', url: images.email },
+                { id: 'socialIconPreview', url: images.social },
+                { id: 'waIconPreview', url: images.wa }
+            ];
+            
+            previews.forEach(preview => {
+                const element = document.getElementById(preview.id);
+                if (element && preview.url) {
+                    element.style.backgroundImage = `url('${preview.url}')`;
+                } else {
+                    element.style.backgroundImage = 'none';
+                }
+            });
+        }
+
+        function updateProfileDataFromForms() {
+            // Update images from inputs
+            if (!profileData.images) profileData.images = {};
+            
+            profileData.images.profile = document.getElementById('editProfilePic').value;
+            profileData.images.about = document.getElementById('editAboutIcon').value;
+            profileData.images.contact = document.getElementById('editContactIcon').value;
+            profileData.images.email = document.getElementById('editEmailIcon').value;
+            profileData.images.social = document.getElementById('editSocialIcon').value;
+            profileData.images.wa = document.getElementById('editWAIcon').value;
+        }
+
+        // Sidebar functions
+        function toggleSidebar() {
+            document.getElementById('sidebarMenu').classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebarMenu').classList.remove('active');
+        }
+
+        // Modal functions
+        function showAboutMe() {
+            document.getElementById('modalAboutMe').classList.add('active');
+        }
+
+        function showKontak() {
+            document.getElementById('modalKontak').classList.add('active');
+        }
+
+        function showEmail() {
+            document.getElementById('modalEmail').classList.add('active');
+        }
+
+        function showSosmed() {
+            document.getElementById('modalSosmed').classList.add('active');
+        }
+
+        function showGrupWA() {
+            document.getElementById('modalGrupWA').classList.add('active');
+        }
+
+        function showMyAccount() {
+            document.getElementById('modalLogin').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Login function
+        function login(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'ilham' && password === 'ilhamxander374801649+_) ;$1! -93') {
+                closeModal('modalLogin');
+                showManagement();
+            } else {
+                alert('Username atau password salah!');
+            }
+        }
+
+        // Management functions
+        function showManagement() {
+            updateForms();
+            document.getElementById('modalManagement').classList.add('active');
+        }
+
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.management-section').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // About Me CRUD functions
+        function addAboutItem() {
+            if (!profileData.about) profileData.about = [];
+            profileData.about.push({ label: "Label Baru", value: "Value Baru" });
+            updateAboutList();
+            showStatus('Item about ditambahkan', 'success');
+        }
+
+        function updateAboutItem(index, field, value) {
+            if (profileData.about && profileData.about[index]) {
+                profileData.about[index][field] = value;
+            }
+        }
+
+        function removeAboutItem(index) {
+            if (profileData.about && profileData.about.length > 1) {
+                profileData.about.splice(index, 1);
+                updateAboutList();
+                showStatus('Item about dihapus', 'success');
+            } else {
+                showStatus('Minimal harus ada 1 item about', 'error');
+            }
+        }
+
+        // Contact CRUD functions
+        function addContactItem() {
+            if (!profileData.contacts) profileData.contacts = [];
+            profileData.contacts.push({ label: "Kontak Baru", value: "https://wa.me/" });
+            updateContactList();
+            showStatus('Kontak ditambahkan', 'success');
+        }
+
+        function updateContactItem(index, field, value) {
+            if (profileData.contacts && profileData.contacts[index]) {
+                profileData.contacts[index][field] = value;
+            }
+        }
+
+        function removeContactItem(index) {
+            if (profileData.contacts) {
+                profileData.contacts.splice(index, 1);
+                updateContactList();
+                showStatus('Kontak dihapus', 'success');
+            }
+        }
+
+        // Email CRUD functions
+        function addEmailItem() {
+            if (!profileData.emails) profileData.emails = [];
+            profileData.emails.push({ label: "Email Baru", value: "email@example.com" });
+            updateEmailList();
+            showStatus('Email ditambahkan', 'success');
+        }
+
+        function updateEmailItem(index, field, value) {
+            if (profileData.emails && profileData.emails[index]) {
+                profileData.emails[index][field] = value;
+            }
+        }
+
+        function removeEmailItem(index) {
+            if (profileData.emails) {
+                profileData.emails.splice(index, 1);
+                updateEmailList();
+                showStatus('Email dihapus', 'success');
+            }
+        }
+
+        // Social CRUD functions
+        function addSocialItem() {
+            if (!profileData.social) profileData.social = [];
+            profileData.social.push({ label: "Sosmed Baru", value: "https://" });
+            updateSocialList();
+            showStatus('Sosmed ditambahkan', 'success');
+        }
+
+        function updateSocialItem(index, field, value) {
+            if (profileData.social && profileData.social[index]) {
+                profileData.social[index][field] = value;
+            }
+        }
+
+        function removeSocialItem(index) {
+            if (profileData.social) {
+                profileData.social.splice(index, 1);
+                updateSocialList();
+                showStatus('Sosmed dihapus', 'success');
+            }
+        }
+
+        // WA Group CRUD functions
+        function addWAItem() {
+            if (!profileData.waGroups) profileData.waGroups = [];
+            profileData.waGroups.push({ label: "Grup WA Baru", value: "LINK_GRUP_WA" });
+            updateWAList();
+            showStatus('Grup WA ditambahkan', 'success');
+        }
+
+        function updateWAItem(index, field, value) {
+            if (profileData.waGroups && profileData.waGroups[index]) {
+                profileData.waGroups[index][field] = value;
+            }
+        }
+
+        function removeWAItem(index) {
+            if (profileData.waGroups) {
+                profileData.waGroups.splice(index, 1);
+                updateWAList();
+                showStatus('Grup WA dihapus', 'success');
+            }
+        }
+
+        // Close modal saat klik di luar modal content
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            
+            // Add real-time preview for image inputs
+            const imageInputs = ['editProfilePic', 'editAboutIcon', 'editContactIcon', 'editEmailIcon', 'editSocialIcon', 'editWAIcon'];
+            imageInputs.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('input', function() {
+                        const previewId = id + 'Preview';
+                        const preview = document.getElementById(previewId);
+                        if (preview && this.value) {
+                            preview.style.backgroundImage = `url('${this.value}')`;
+                        }
+                    });
+                }
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                const sidebar = document.getElementById('sidebarMenu');
+                const hamburger = document.querySelector('.hamburger-menu');
+                
+                if (sidebar.classList.contains('active') && 
+                    !sidebar.contains(event.target) && 
+                    !hamburger.contains(event.target)) {
+                    closeSidebar();
+                }
+            });
+            
+            // Initialize semua modal dengan data
+            updateUI();
+        });
+
+        // Prevent form submission on Enter in management
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && event.target.type !== 'submit') {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
