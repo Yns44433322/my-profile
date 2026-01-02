@@ -12,1599 +12,896 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background: url('https://ar-hosting.pages.dev/1767395768910.jpg') center/cover fixed;
             min-height: 100vh;
-            background: #1a2332;
-            background-image: url('https://ar-hosting.pages.dev/1767359561536.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             position: relative;
+            overflow-x: hidden;
         }
 
         body::before {
             content: '';
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(26, 35, 50, 0.85);
+            background: rgba(20, 35, 45, 0.85);
             z-index: 0;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            transition: opacity 0.3s;
+        }
+
+        .overlay.active {
+            display: block;
         }
 
         .container {
             position: relative;
             z-index: 1;
-            max-width: 800px;
+            max-width: 480px;
             margin: 0 auto;
-            padding: 60px 15px 30px;
+            padding: 20px 15px;
+            min-height: 100vh;
+        }
+
+        .hamburger {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 24px;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .hamburger span {
             width: 100%;
-            box-sizing: border-box;
+            height: 2.5px;
+            background: #00d9ff;
+            border-radius: 2px;
+            transition: all 0.3s;
+            box-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
         }
 
-        .profile-header {
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 280px;
+            height: 100vh;
+            background: rgba(25, 40, 50, 0.98);
+            backdrop-filter: blur(15px);
+            padding: 70px 15px 20px;
+            transition: right 0.3s ease;
+            z-index: 999;
+            border-left: 2px solid #00d9ff;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.8);
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-item {
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
             text-align: center;
-            margin-bottom: 40px;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            font-size: 15px;
         }
 
-        .profile-pic {
+        .sidebar-item:hover {
+            background: rgba(0, 217, 255, 0.2);
+            transform: translateX(-5px);
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
+        }
+
+        .profile-circle {
             width: 120px;
             height: 120px;
             border-radius: 50%;
+            background: #c4d633;
+            margin: 0 auto 15px;
             background-image: url('https://ar-hosting.pages.dev/1767225989304.jpg');
             background-size: cover;
             background-position: center;
-            background-color: #c4d82e;
-            margin: 0 auto 20px;
-            border: 4px solid rgba(255,255,255,0.2);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            border: 3px solid rgba(0, 217, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.6);
         }
 
-        h1 {
+        .title {
+            text-align: center;
             color: white;
             font-size: 28px;
             font-weight: bold;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-            padding: 0 10px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px rgba(0, 217, 255, 0.8);
         }
 
-        .menu-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 15px;
+        .menu-item {
             display: flex;
             align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1.5px solid rgba(255,255,255,0.1);
-            width: 100%;
-            box-sizing: border-box;
+            transition: all 0.3s;
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            text-decoration: none;
         }
 
-        .menu-card:hover {
+        .menu-item:hover {
             background: rgba(255, 255, 255, 0.25);
-            transform: translateX(5px);
-            border-color: rgba(100,200,255,0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 217, 255, 0.4);
+            border-color: #00d9ff;
         }
 
         .menu-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 45px;
+            height: 45px;
+            background: rgba(196, 214, 51, 0.3);
+            border-radius: 8px;
             margin-right: 15px;
-            flex-shrink: 0;
             background-size: cover;
             background-position: center;
-            background-color: rgba(196, 216, 46, 0.3);
+            border: 2px solid rgba(0, 217, 255, 0.4);
+            flex-shrink: 0;
         }
 
         .menu-text {
             color: white;
             font-size: 18px;
-            font-weight: 600;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-            flex: 1;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        /* Modal Styles */
-        .modal {
+        .page {
             display: none;
             position: fixed;
-            z-index: 1000;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
+            height: 100vh;
+            background: rgba(20, 35, 45, 0.98);
+            z-index: 2000;
             overflow-y: auto;
-            padding: 20px 10px;
-            box-sizing: border-box;
+            padding: 70px 20px 30px;
         }
 
-        .modal.active {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            animation: fadeIn 0.3s;
+        .page.active {
+            display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .page-content {
+            max-width: 480px;
+            margin: 0 auto;
         }
 
-        .modal-content {
-            background: rgba(30, 40, 55, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 25px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 85vh;
-            overflow-y: auto;
-            border: 2px solid rgba(100,200,255,0.3);
-            animation: slideUp 0.3s;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .modal-title {
-            color: white;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .close-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            flex-shrink: 0;
-        }
-
-        .close-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
+        .page h2 {
+            color: #00d9ff;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 26px;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
         }
 
         .info-item {
-            background: rgba(255,255,255,0.1);
-            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 12px 0;
             border-radius: 10px;
-            margin-bottom: 10px;
+            border: 1px solid rgba(0, 217, 255, 0.3);
         }
 
         .info-label {
-            color: #c4d82e;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 4px;
+            color: #00d9ff;
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
         .info-value {
             color: white;
             font-size: 16px;
-            word-break: break-word;
         }
 
-        .option-btn {
-            background: rgba(100,200,255,0.2);
-            border: 2px solid rgba(100,200,255,0.4);
+        .action-btn {
+            display: block;
+            padding: 15px;
+            margin: 12px 0;
+            background: rgba(0, 217, 255, 0.2);
             color: white;
-            padding: 14px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s;
-            width: 100%;
             text-align: center;
-            box-sizing: border-box;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #00d9ff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
         }
 
-        .option-btn:hover {
-            background: rgba(100,200,255,0.4);
-            border-color: rgba(100,200,255,0.6);
-            transform: scale(1.01);
+        .action-btn:hover {
+            background: rgba(0, 217, 255, 0.4);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.6);
         }
 
-        /* Hamburger Menu */
-        .hamburger-menu {
+        .back-btn {
             position: fixed;
             top: 15px;
-            right: 15px;
-            z-index: 1001;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            left: 15px;
+            background: rgba(0, 217, 255, 0.3);
+            border: 2px solid #00d9ff;
+            color: white;
+            padding: 8px 15px;
             border-radius: 8px;
-            padding: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hamburger-icon {
-            width: 24px;
-            height: 18px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .hamburger-icon span {
-            display: block;
-            height: 2.5px;
-            background: white;
-            border-radius: 2px;
-            width: 100%;
-        }
-
-        /* Sidebar Menu */
-        .sidebar-menu {
-            position: fixed;
-            top: 0;
-            right: -280px;
-            width: 280px;
-            height: 100%;
-            background: rgba(30, 40, 55, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 1002;
-            padding: 70px 15px 20px;
-            transition: right 0.3s ease;
-            border-left: 1px solid rgba(100,200,255,0.3);
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-
-        .sidebar-menu.active {
-            right: 0;
-        }
-
-        .sidebar-item {
-            color: white;
-            padding: 14px;
-            margin-bottom: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            box-sizing: border-box;
-        }
-
-        .sidebar-item:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateX(-3px);
-        }
-
-        /* Login Form */
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-label {
-            color: white;
             font-size: 14px;
-            font-weight: 600;
+            z-index: 2001;
+            font-weight: bold;
         }
 
-        .form-input {
+        .back-btn:hover {
+            background: rgba(0, 217, 255, 0.5);
+        }
+
+        .login-form input {
+            width: 100%;
             padding: 12px;
-            border-radius: 10px;
-            border: 2px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.1);
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #00d9ff;
+            border-radius: 8px;
             color: white;
             font-size: 15px;
-            width: 100%;
-            box-sizing: border-box;
         }
 
-        .form-input:focus {
-            outline: none;
-            border-color: #c4d82e;
+        .login-form input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        .login-btn {
-            background: #c4d82e;
-            color: #1a2332;
-            border: none;
-            padding: 14px;
+        .admin-section {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+        }
+
+        .admin-section h3 {
+            color: #00d9ff;
+            margin-bottom: 12px;
             font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+        }
+
+        .admin-section input, .admin-section select {
             width: 100%;
-            box-sizing: border-box;
+            padding: 10px;
+            margin: 6px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00d9ff;
+            border-radius: 6px;
+            color: white;
+            font-size: 14px;
         }
 
-        .login-btn:hover {
-            background: #d4e85e;
-            transform: scale(1.01);
+        .admin-section select option {
+            background: #1a2530;
+            color: white;
         }
 
-        /* Management Styles */
-        .management-section {
-            display: none;
-        }
-
-        .management-section.active {
-            display: block;
-        }
-
-        .management-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .tab-btn {
-            padding: 8px 12px;
-            background: rgba(255,255,255,0.1);
-            border: none;
-            border-radius: 8px;
+        .admin-section button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: rgba(0, 217, 255, 0.3);
+            border: 2px solid #00d9ff;
+            border-radius: 6px;
             color: white;
             cursor: pointer;
-            transition: all 0.3s;
-            font-size: 13px;
-            font-weight: 600;
-            flex: 1;
-            min-width: 80px;
-            text-align: center;
-        }
-
-        .tab-btn.active {
-            background: #c4d82e;
-            color: #1a2332;
-        }
-
-        .tab-content {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-            align-items: flex-end;
-        }
-
-        .form-row input {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .add-btn, .delete-btn {
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
             transition: all 0.3s;
             font-size: 14px;
-            white-space: nowrap;
+            font-weight: bold;
         }
 
-        .add-btn {
-            background: #4CAF50;
-            color: white;
-            width: 100%;
+        .admin-section button:hover {
+            background: rgba(0, 217, 255, 0.5);
+        }
+
+        .logout-btn {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: #ff0000;
+            margin-top: 20px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 0, 0, 0.5);
+        }
+
+        .custom-menu-list {
             margin-top: 10px;
         }
 
-        .delete-btn {
-            background: #f44336;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .add-btn:hover {
-            background: #45a049;
-        }
-
-        .delete-btn:hover {
-            background: #d32f2f;
-        }
-
-        .image-preview {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            background-size: cover;
-            background-position: center;
-            margin: 10px auto;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .save-btn {
-            background: #2196F3;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 15px;
-            box-sizing: border-box;
-        }
-
-        .save-btn:hover {
-            background: #1976D2;
-            transform: scale(1.01);
-        }
-
-        /* Dynamic About Me Items */
-        .about-item {
-            background: rgba(255,255,255,0.1);
+        .custom-menu-card {
+            background: rgba(255, 255, 255, 0.08);
             padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 217, 255, 0.2);
         }
 
-        .about-row {
-            display: flex;
-            gap: 8px;
+        .custom-menu-card h4 {
+            color: #00d9ff;
+            font-size: 14px;
             margin-bottom: 8px;
         }
 
-        .about-row input {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.1);
-            color: white;
-            font-size: 14px;
-            box-sizing: border-box;
+        .custom-menu-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            margin: 4px 0;
         }
 
-        .about-row input::placeholder {
-            color: rgba(255,255,255,0.5);
+        .custom-menu-card button {
+            width: auto;
+            padding: 6px 12px;
+            margin: 5px 5px 0 0;
+            font-size: 12px;
         }
 
-        /* Status Messages */
-        .status-message {
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 14px;
+        .sub-item-list {
+            margin-top: 8px;
+            padding-left: 15px;
         }
 
-        .success {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4CAF50;
-            border: 1px solid rgba(76, 175, 80, 0.3);
+        .sub-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        .error {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
-            border: 1px solid rgba(244, 67, 54, 0.3);
+        .delete-btn {
+            background: rgba(255, 0, 0, 0.3) !important;
+            border-color: #ff0000 !important;
         }
 
-        /* Overlay untuk loading */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            display: none;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #c4d82e;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            .container {
-                padding: 50px 12px 25px;
-            }
-            
-            .profile-pic {
-                width: 100px;
-                height: 100px;
-            }
-            
-            h1 {
-                font-size: 24px;
-            }
-            
-            .menu-text {
-                font-size: 16px;
-            }
-            
-            .modal-content {
-                padding: 20px 15px;
-                margin-top: 10px;
-            }
-            
-            .modal-title {
-                font-size: 20px;
-            }
-            
-            .sidebar-menu {
-                width: 250px;
-            }
-            
-            .tab-btn {
-                font-size: 12px;
-                padding: 6px 8px;
-                min-width: 70px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .menu-text {
-                font-size: 15px;
-            }
-            
-            .menu-icon {
-                width: 45px;
-                height: 45px;
-                margin-right: 12px;
-            }
-            
-            .tab-btn {
-                font-size: 11px;
-                padding: 5px 6px;
-                min-width: 65px;
-            }
+        .delete-btn:hover {
+            background: rgba(255, 0, 0, 0.5) !important;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <div class="hamburger" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
-    <!-- Hamburger Menu -->
-    <div class="hamburger-menu" onclick="toggleSidebar()">
-        <div class="hamburger-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-item" onclick="window.showPage('pageAbout')">About Me</div>
+        <div class="sidebar-item" onclick="window.showPage('pageKontak')">Kontak</div>
+        <div class="sidebar-item" onclick="window.showPage('pageEmail')">Email</div>
+        <div class="sidebar-item" onclick="window.showPage('pageSosmed')">Sosmed</div>
+        <div class="sidebar-item" onclick="window.showPage('pageGrup')">Grup Whatsapp</div>
+        <div id="customSidebarMenus"></div>
+        <div class="sidebar-item" onclick="window.showPage('pageLogin')">My Account</div>
     </div>
 
-    <!-- Sidebar Menu -->
-    <div class="sidebar-menu" id="sidebarMenu">
-        <div class="sidebar-item" onclick="showAboutMe(); closeSidebar()">About Me</div>
-        <div class="sidebar-item" onclick="showKontak(); closeSidebar()">Kontak</div>
-        <div class="sidebar-item" onclick="showEmail(); closeSidebar()">Email</div>
-        <div class="sidebar-item" onclick="showSosmed(); closeSidebar()">Sosmed</div>
-        <div class="sidebar-item" onclick="showGrupWA(); closeSidebar()">Grup Whatsapp</div>
-        <div class="sidebar-item" onclick="showMyAccount(); closeSidebar()">My Account</div>
-    </div>
-
-    <div class="container">
-        <div class="profile-header">
-            <div class="profile-pic" id="mainProfilePic"></div>
-            <h1>My Profile</h1>
-        </div>
-
-        <!-- Menu Cards -->
-        <div class="menu-card" onclick="showAboutMe()">
-            <div class="menu-icon" id="aboutIcon"></div>
+    <div class="container" id="mainPage">
+        <div class="profile-circle" id="profileCircle"></div>
+        <div class="title">My Profile</div>
+        
+        <div class="menu-item" onclick="window.showPage('pageAbout')">
+            <div class="menu-icon" id="iconAbout"></div>
             <div class="menu-text">About Me</div>
         </div>
 
-        <div class="menu-card" onclick="showKontak()">
-            <div class="menu-icon" id="contactIcon"></div>
+        <div class="menu-item" onclick="window.showPage('pageKontak')">
+            <div class="menu-icon" id="iconKontak"></div>
             <div class="menu-text">Kontak</div>
         </div>
 
-        <div class="menu-card" onclick="showEmail()">
-            <div class="menu-icon" id="emailIcon"></div>
+        <div class="menu-item" onclick="window.showPage('pageEmail')">
+            <div class="menu-icon" id="iconEmail"></div>
             <div class="menu-text">Email</div>
         </div>
 
-        <div class="menu-card" onclick="showSosmed()">
-            <div class="menu-icon" id="socialIcon"></div>
+        <div class="menu-item" onclick="window.showPage('pageSosmed')">
+            <div class="menu-icon" id="iconSosmed"></div>
             <div class="menu-text">Sosmed</div>
         </div>
 
-        <div class="menu-card" onclick="showGrupWA()">
-            <div class="menu-icon" id="waIcon"></div>
+        <div class="menu-item" onclick="window.showPage('pageGrup')">
+            <div class="menu-icon" id="iconGrup"></div>
             <div class="menu-text">Grup Whatsapp</div>
         </div>
+
+        <div id="customMainMenus"></div>
     </div>
 
-    <!-- Modals -->
-    <div id="modalAboutMe" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">About Me</div>
-                <button class="close-btn" onclick="closeModal('modalAboutMe')">×</button>
+    <!-- Pages -->
+    <div class="page" id="pageAbout">
+        <button class="back-btn" onclick="closePage()">← Kembali</button>
+        <div class="page-content">
+            <h2>About Me</h2>
+            <div class="info-item">
+                <div class="info-label">Nama</div>
+                <div class="info-value" id="displayNama">Ilham Fadilah</div>
             </div>
-            <div id="aboutMeContent">
-                <!-- Dynamic content will be loaded here -->
+            <div class="info-item">
+                <div class="info-label">Panggilan</div>
+                <div class="info-value" id="displayPanggilan">Ilham - Katyusha</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Nick Name Google Play</div>
+                <div class="info-value" id="displayNick">INDO MIE HQQ 331</div>
             </div>
         </div>
     </div>
 
-    <div id="modalKontak" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Kontak</div>
-                <button class="close-btn" onclick="closeModal('modalKontak')">×</button>
-            </div>
-            <div id="contactContent">
-                <!-- Dynamic content will be loaded here -->
+    <div class="page" id="pageKontak">
+        <button class="back-btn" onclick="closePage()">← Kembali</button>
+        <div class="page-content">
+            <h2>Kontak</h2>
+            <a href="https://wa.me/6289604270322" class="action-btn" target="_blank">WhatsApp 1</a>
+            <a href="https://wa.me/79522843622" class="action-btn" target="_blank">WhatsApp 2</a>
+        </div>
+    </div>
+
+    <div class="page" id="pageEmail">
+        <button class="back-btn" onclick="closePage()">← Kembali</button>
+        <div class="page-content">
+            <h2>Email</h2>
+            <a href="mailto:Bow1cia@gmail.com" class="action-btn" id="email1Link">Email 1</a>
+            <a href="mailto:Neoveloxi@gmail.com" class="action-btn" id="email2Link">Email 2</a>
+        </div>
+    </div>
+
+    <div class="page" id="pageSosmed">
+        <button class="back-btn" onclick="closePage()">← Kembali</button>
+        <div class="page-content">
+            <h2>Sosmed</h2>
+            <a href="https://instagram.com/IlhamFadilah720.bgr" class="action-btn" target="_blank" id="igLink">Instagram</a>
+        </div>
+    </div>
+
+    <div class="page" id="pageGrup">
+        <button class="back-btn" onclick="closePage()">← Kembali</button>
+        <div class="page-content">
+            <h2>Grup Whatsapp</h2>
+            <a href="" class="action-btn" target="_blank" id="grup1">Grup 1</a>
+            <a href="" class="action-btn" target="_blank" id="grup2">Grup 2</a>
+            <a href="" class="action-btn" target="_blank" id="grup3">Grup 3</a>
+        </div>
+    </div>
+
+    <div class="page" id="pageLogin">
+        <button class="back-btn" onclick="closePage()">← Kembali</button>
+        <div class="page-content">
+            <h2>Login Admin</h2>
+            <div class="login-form">
+                <input type="text" id="username" placeholder="Username">
+                <input type="password" id="password" placeholder="Password">
+                <button class="action-btn" onclick="login()">Login</button>
             </div>
         </div>
     </div>
 
-    <div id="modalEmail" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Email</div>
-                <button class="close-btn" onclick="closeModal('modalEmail')">×</button>
-            </div>
-            <div id="emailContent">
-                <!-- Dynamic content will be loaded here -->
-            </div>
-        </div>
-    </div>
-
-    <div id="modalSosmed" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Sosmed</div>
-                <button class="close-btn" onclick="closeModal('modalSosmed')">×</button>
-            </div>
-            <div id="socialContent">
-                <!-- Dynamic content will be loaded here -->
-            </div>
-        </div>
-    </div>
-
-    <div id="modalGrupWA" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Grup WhatsApp</div>
-                <button class="close-btn" onclick="closeModal('modalGrupWA')">×</button>
-            </div>
-            <div id="waContent">
-                <!-- Dynamic content will be loaded here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Login -->
-    <div id="modalLogin" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Login My Account</div>
-                <button class="close-btn" onclick="closeModal('modalLogin')">×</button>
-            </div>
-            <form class="login-form" onsubmit="login(event)">
-                <div class="form-group">
-                    <label class="form-label">Username</label>
-                    <input type="text" class="form-input" id="username" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-input" id="password" required>
-                </div>
-                <button type="submit" class="login-btn">Login</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal Management -->
-    <div id="modalManagement" class="modal">
-        <div class="modal-content" style="max-width: 600px;">
-            <div class="modal-header">
-                <div class="modal-title">Profile Management</div>
-                <button class="close-btn" onclick="closeModal('modalManagement')">×</button>
-            </div>
+    <div class="page" id="pageAdmin">
+        <button class="back-btn" onclick="logout()">← Logout</button>
+        <div class="page-content">
+            <h2>Admin Panel</h2>
             
-            <div id="statusMessage" class="status-message" style="display:none;"></div>
-            
-            <div class="management-tabs">
-                <button class="tab-btn active" onclick="showTab('aboutTab')">About Me</button>
-                <button class="tab-btn" onclick="showTab('contactTab')">Kontak</button>
-                <button class="tab-btn" onclick="showTab('emailTab')">Email</button>
-                <button class="tab-btn" onclick="showTab('socialTab')">Sosmed</button>
-                <button class="tab-btn" onclick="showTab('waTab')">Grup WA</button>
-                <button class="tab-btn" onclick="showTab('imagesTab')">Images</button>
+            <div class="admin-section">
+                <h3>Edit Profile Photo</h3>
+                <input type="text" id="newProfileUrl" placeholder="URL Foto Profil">
+                <button onclick="updateProfilePhoto()">Update Foto Profil</button>
             </div>
 
-            <!-- About Me Tab -->
-            <div id="aboutTab" class="management-section active">
-                <div class="tab-content">
-                    <div id="aboutList">
-                        <!-- Dynamic about items will be loaded here -->
-                    </div>
-                    <button type="button" class="add-btn" onclick="addAboutItem()">Tambah About Item</button>
-                </div>
+            <div class="admin-section">
+                <h3>Edit Background</h3>
+                <input type="text" id="newBgUrl" placeholder="URL Background">
+                <button onclick="updateBackground()">Update Background</button>
             </div>
 
-            <!-- Contact Tab -->
-            <div id="contactTab" class="management-section">
-                <div class="tab-content">
-                    <div id="contactList">
-                        <!-- Dynamic contact items will be loaded here -->
-                    </div>
-                    <button type="button" class="add-btn" onclick="addContactItem()">Tambah Kontak</button>
-                </div>
+            <div class="admin-section">
+                <h3>Edit About Me</h3>
+                <input type="text" id="editNama" placeholder="Nama">
+                <input type="text" id="editPanggilan" placeholder="Panggilan">
+                <input type="text" id="editNick" placeholder="Nick Name">
+                <button onclick="updateAbout()">Update About</button>
             </div>
 
-            <!-- Email Tab -->
-            <div id="emailTab" class="management-section">
-                <div class="tab-content">
-                    <div id="emailList">
-                        <!-- Dynamic email items will be loaded here -->
-                    </div>
-                    <button type="button" class="add-btn" onclick="addEmailItem()">Tambah Email</button>
-                </div>
+            <div class="admin-section">
+                <h3>Edit Email</h3>
+                <input type="text" id="editEmail1" placeholder="Email 1">
+                <input type="text" id="editEmail2" placeholder="Email 2">
+                <button onclick="updateEmails()">Update Emails</button>
             </div>
 
-            <!-- Social Tab -->
-            <div id="socialTab" class="management-section">
-                <div class="tab-content">
-                    <div id="socialList">
-                        <!-- Dynamic social items will be loaded here -->
-                    </div>
-                    <button type="button" class="add-btn" onclick="addSocialItem()">Tambah Sosmed</button>
-                </div>
+            <div class="admin-section">
+                <h3>Edit Instagram</h3>
+                <input type="text" id="editIg" placeholder="Username Instagram">
+                <button onclick="updateIg()">Update Instagram</button>
             </div>
 
-            <!-- WA Group Tab -->
-            <div id="waTab" class="management-section">
-                <div class="tab-content">
-                    <div id="waList">
-                        <!-- Dynamic WA group items will be loaded here -->
-                    </div>
-                    <button type="button" class="add-btn" onclick="addWAItem()">Tambah Grup WA</button>
-                </div>
+            <div class="admin-section">
+                <h3>Edit Link Grup WhatsApp</h3>
+                <input type="text" id="editGrup1" placeholder="Link Grup 1">
+                <input type="text" id="editGrup2" placeholder="Link Grup 2">
+                <input type="text" id="editGrup3" placeholder="Link Grup 3">
+                <button onclick="updateGrups()">Update Grup Links</button>
             </div>
 
-            <!-- Images Tab -->
-            <div id="imagesTab" class="management-section">
-                <div class="tab-content">
-                    <div class="form-group">
-                        <label class="form-label">Profile Picture (Bulat)</label>
-                        <input type="text" class="form-input" id="editProfilePic" placeholder="URL Gambar">
-                        <div class="image-preview" id="profilePicPreview"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">About Me Icon (Kotak)</label>
-                        <input type="text" class="form-input" id="editAboutIcon" placeholder="URL Gambar">
-                        <div class="image-preview" id="aboutIconPreview"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Contact Icon (Kotak)</label>
-                        <input type="text" class="form-input" id="editContactIcon" placeholder="URL Gambar">
-                        <div class="image-preview" id="contactIconPreview"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Email Icon (Kotak)</label>
-                        <input type="text" class="form-input" id="editEmailIcon" placeholder="URL Gambar">
-                        <div class="image-preview" id="emailIconPreview"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Social Icon (Kotak)</label>
-                        <input type="text" class="form-input" id="editSocialIcon" placeholder="URL Gambar">
-                        <div class="image-preview" id="socialIconPreview"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">WA Group Icon (Kotak)</label>
-                        <input type="text" class="form-input" id="editWAIcon" placeholder="URL Gambar">
-                        <div class="image-preview" id="waIconPreview"></div>
-                    </div>
-                </div>
+            <div class="admin-section">
+                <h3>Edit Icons</h3>
+                <input type="text" id="iconAboutUrl" placeholder="URL Icon About">
+                <input type="text" id="iconKontakUrl" placeholder="URL Icon Kontak">
+                <input type="text" id="iconEmailUrl" placeholder="URL Icon Email">
+                <input type="text" id="iconSosmedUrl" placeholder="URL Icon Sosmed">
+                <input type="text" id="iconGrupUrl" placeholder="URL Icon Grup">
+                <button onclick="updateIcons()">Update Icons</button>
             </div>
 
-            <button class="save-btn" onclick="saveData()">Simpan Perubahan</button>
+            <div class="admin-section">
+                <h3>Tambah Menu Baru</h3>
+                <input type="text" id="newMenuTitle" placeholder="Nama Menu (contoh: Telegram)">
+                <input type="text" id="newMenuIcon" placeholder="URL Icon">
+                <button onclick="addNewMenu()">Tambah Menu</button>
+                
+                <div class="custom-menu-list" id="customMenuList"></div>
+            </div>
         </div>
     </div>
+
+    <div id="customPages"></div>
 
     <script>
-        // Bin JSON Configuration
-        const BIN_ID = '6957fc6e43b1c97be914b554';
-        const X_MASTER_KEY = '$2a$10$Vmoh.3UIQA4k86DVG/44lu4.xo69qr5A1pKmDpF5NtxWAKHjGlkwO';
-        const X_ACCESS_KEY = '$2a$10$6fQtDpm6PKhldXE9GSr.kepupjk9J4ZORoD8FUGzF3QtK1bgepyva';
-        const BASE_URL = 'https://api.jsonbin.io/v3/b';
-        
-        // Default data
+        const BIN_ID = '6958032343b1c97be914c0d7';
+        const API_KEY = '$2a$10$YXxJR0P7sLpdndCYuUEggubD1BZgbBUgYm3quitGibzVj.PRMFPLq';
+        const ACCESS_KEY = '$2a$10$3fnQimLIl7meNs4hFxu0iu3C3.9jmJWN99ImsTvkx2pjWwFDwesNS';
+
         let profileData = {
-            about: [
-                { label: "Nama", value: "Ilham Fadilah" },
-                { label: "Panggilan", value: "Ilham - Katyusha" },
-                { label: "Nick Name Google Play", value: "INDO MIE HQQ 331" }
-            ],
-            contacts: [
-                { label: "WhatsApp 1", value: "https://wa.me/6289604270322" },
-                { label: "WhatsApp 2", value: "https://wa.me/79522843622" }
-            ],
-            emails: [
-                { label: "Email 1", value: "Bow1cia@gmail.com" },
-                { label: "Email 2", value: "Neoveloxi@gmail.com" }
-            ],
-            social: [
-                { label: "Instagram", value: "https://www.instagram.com/IlhamFadilah720.bgr" }
-            ],
-            waGroups: [
-                { label: "Grup WhatsApp 1", value: "https://chat.whatsapp.com/EXAMPLE1" },
-                { label: "Grup WhatsApp 2", value: "https://chat.whatsapp.com/EXAMPLE2" },
-                { label: "Grup WhatsApp 3", value: "https://chat.whatsapp.com/EXAMPLE3" }
-            ],
-            images: {
-                profile: "https://ar-hosting.pages.dev/1767225989304.jpg",
-                about: "https://ar-hosting.pages.dev/1767225989304.jpg",
-                contact: "https://ar-hosting.pages.dev/1767225989304.jpg",
-                email: "https://ar-hosting.pages.dev/1767225989304.jpg",
-                social: "https://ar-hosting.pages.dev/1767225989304.jpg",
-                wa: "https://ar-hosting.pages.dev/1767225989304.jpg"
-            }
+            nama: 'Ilham Fadilah',
+            panggilan: 'Ilham - Katyusha',
+            nick: 'INDO MIE HQQ 331',
+            email1: 'Bow1cia@gmail.com',
+            email2: 'Neoveloxi@gmail.com',
+            ig: 'IlhamFadilah720.bgr',
+            grup1: '',
+            grup2: '',
+            grup3: '',
+            profilePhoto: 'https://ar-hosting.pages.dev/1767225989304.jpg',
+            background: 'https://ar-hosting.pages.dev/1767395768910.jpg',
+            iconAbout: 'https://ar-hosting.pages.dev/1767225989304.jpg',
+            iconKontak: 'https://ar-hosting.pages.dev/1767396099731.jpg',
+            iconEmail: 'https://ar-hosting.pages.dev/1767396098271.jpg',
+            iconSosmed: 'https://ar-hosting.pages.dev/1767396098981.jpg',
+            iconGrup: 'https://ar-hosting.pages.dev/1767396100541.jpg',
+            customMenus: []
         };
 
-        // Show loading overlay
-        function showLoading() {
-            document.getElementById('loadingOverlay').style.display = 'flex';
-        }
-
-        // Hide loading overlay
-        function hideLoading() {
-            document.getElementById('loadingOverlay').style.display = 'none';
-        }
-
-        // Show status message
-        function showStatus(message, type) {
-            const statusEl = document.getElementById('statusMessage');
-            statusEl.textContent = message;
-            statusEl.className = `status-message ${type}`;
-            statusEl.style.display = 'block';
-            
-            setTimeout(() => {
-                statusEl.style.display = 'none';
-            }, 3000);
-        }
-
-        // Load data dengan fallback ke localStorage
-        function loadFromLocalStorage() {
-            try {
-                const saved = localStorage.getItem('profileData');
-                if (saved) {
-                    return JSON.parse(saved);
-                }
-            } catch (e) {
-                console.error('Error loading from localStorage:', e);
-            }
-            return null;
-        }
-
-        // Save to localStorage
-        function saveToLocalStorage() {
-            try {
-                localStorage.setItem('profileData', JSON.stringify(profileData));
-                return true;
-            } catch (e) {
-                console.error('Error saving to localStorage:', e);
-                return false;
-            }
-        }
-
-        // Load data from JSONBin on page load
         async function loadData() {
-            showLoading();
-            
-            // Coba load dari localStorage dulu
-            const localData = loadFromLocalStorage();
-            if (localData) {
-                profileData = localData;
-                showStatus('Data dimuat dari penyimpanan lokal', 'success');
-                updateUI();
-                hideLoading();
-                return;
-            }
-            
-            // Jika tidak ada di localStorage, coba dari JSONBin
             try {
-                const response = await fetch(`${BASE_URL}/${BIN_ID}/latest`, {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
                     headers: {
-                        'X-Master-Key': X_MASTER_KEY,
-                        'X-Access-Key': X_ACCESS_KEY
+                        'X-Master-Key': API_KEY,
+                        'X-Access-Key': ACCESS_KEY
                     }
                 });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.record) {
-                        profileData = data.record;
-                        saveToLocalStorage();
-                        showStatus('Data berhasil dimuat dari server', 'success');
-                    }
-                } else {
-                    // Jika gagal, gunakan data default
-                    saveToLocalStorage();
-                    showStatus('Menggunakan data default', 'error');
+                const data = await response.json();
+                if (data.record) {
+                    profileData = data.record;
+                    if (!profileData.customMenus) profileData.customMenus = [];
+                    applyData();
                 }
             } catch (error) {
-                console.error('Error loading data:', error);
-                saveToLocalStorage();
-                showStatus('Menggunakan data default', 'error');
-            } finally {
-                updateUI();
-                hideLoading();
+                console.log('Menggunakan data default');
+                applyData();
             }
         }
 
-        // Save data to JSONBin
         async function saveData() {
-            showLoading();
-            
-            // Update profileData from form inputs
-            updateProfileDataFromForms();
-            
-            // Simpan ke localStorage dulu
-            saveToLocalStorage();
-            
-            // Coba simpan ke JSONBin
             try {
-                const response = await fetch(`${BASE_URL}/${BIN_ID}`, {
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-Master-Key': X_MASTER_KEY,
-                        'X-Access-Key': X_ACCESS_KEY
+                        'X-Master-Key': API_KEY,
+                        'X-Access-Key': ACCESS_KEY
                     },
                     body: JSON.stringify(profileData)
                 });
-                
-                if (response.ok) {
-                    updateUI();
-                    showStatus('Data berhasil disimpan!', 'success');
-                    setTimeout(() => {
-                        closeModal('modalManagement');
-                        hideLoading();
-                    }, 1500);
-                } else {
-                    showStatus('Data disimpan lokal, gagal ke server', 'error');
-                    setTimeout(() => {
-                        closeModal('modalManagement');
-                        hideLoading();
-                    }, 1500);
-                }
+                alert('Data berhasil disimpan!');
             } catch (error) {
-                console.error('Error saving data:', error);
-                showStatus('Data disimpan lokal, gagal ke server', 'error');
-                setTimeout(() => {
-                    closeModal('modalManagement');
-                    hideLoading();
-                }, 1500);
+                alert('Gagal menyimpan data: ' + error.message);
             }
         }
 
-        // Update UI with current data
-        function updateUI() {
-            // Update About Me modal
-            updateAboutMeModal();
+        function applyData() {
+            document.getElementById('profileCircle').style.backgroundImage = `url('${profileData.profilePhoto}')`;
+            document.body.style.backgroundImage = `url('${profileData.background}')`;
             
-            // Update Contact modal
-            updateContactModal();
+            document.getElementById('iconAbout').style.backgroundImage = `url('${profileData.iconAbout}')`;
+            document.getElementById('iconKontak').style.backgroundImage = `url('${profileData.iconKontak}')`;
+            document.getElementById('iconEmail').style.backgroundImage = `url('${profileData.iconEmail}')`;
+            document.getElementById('iconSosmed').style.backgroundImage = `url('${profileData.iconSosmed}')`;
+            document.getElementById('iconGrup').style.backgroundImage = `url('${profileData.iconGrup}')`;
             
-            // Update Email modal
-            updateEmailModal();
+            document.getElementById('displayNama').textContent = profileData.nama;
+            document.getElementById('displayPanggilan').textContent = profileData.panggilan;
+            document.getElementById('displayNick').textContent = profileData.nick;
             
-            // Update Social modal
-            updateSocialModal();
+            document.getElementById('email1Link').href = 'mailto:' + profileData.email1;
+            document.getElementById('email2Link').href = 'mailto:' + profileData.email2;
             
-            // Update WA Groups modal
-            updateWAModal();
+            document.getElementById('igLink').href = 'https://instagram.com/' + profileData.ig;
             
-            // Update images
-            updateImages();
+            document.getElementById('grup1').href = profileData.grup1;
+            document.getElementById('grup2').href = profileData.grup2;
+            document.getElementById('grup3').href = profileData.grup3;
+
+            renderCustomMenus();
         }
 
-        // Update About Me modal
-        function updateAboutMeModal() {
-            const container = document.getElementById('aboutMeContent');
-            container.innerHTML = '';
-            
-            if (profileData.about && profileData.about.length > 0) {
-                profileData.about.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'info-item';
-                    div.innerHTML = `
-                        <div class="info-label">${item.label}</div>
-                        <div class="info-value">${item.value}</div>
-                    `;
-                    container.appendChild(div);
-                });
-            } else {
-                container.innerHTML = '<div class="info-item">Tidak ada data</div>';
-            }
+        function renderCustomMenus() {
+            const mainMenusHtml = profileData.customMenus.map((menu, index) => `
+                <div class="menu-item" onclick="showCustomPage(${index})">
+                    <div class="menu-icon" style="background-image: url('${menu.icon}')"></div>
+                    <div class="menu-text">${menu.title}</div>
+                </div>
+            `).join('');
+            document.getElementById('customMainMenus').innerHTML = mainMenusHtml;
+
+            const sidebarMenusHtml = profileData.customMenus.map((menu, index) => `
+                <div class="sidebar-item" onclick="showCustomPage(${index})">${menu.title}</div>
+            `).join('');
+            document.getElementById('customSidebarMenus').innerHTML = sidebarMenusHtml;
+
+            const pagesHtml = profileData.customMenus.map((menu, index) => {
+                const buttonsHtml = menu.items.map((item, itemIndex) => `
+                    <a href="${item.link}" class="action-btn" target="_blank">${item.label}</a>
+                `).join('');
+
+                return `
+                    <div class="page" id="customPage${index}">
+                        <button class="back-btn" onclick="closePage()">← Kembali</button>
+                        <div class="page-content">
+                            <h2>${menu.title}</h2>
+                            ${buttonsHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('customPages').innerHTML = pagesHtml;
+
+            renderCustomMenuList();
         }
 
-        // Update Contact modal
-        function updateContactModal() {
-            const container = document.getElementById('contactContent');
-            container.innerHTML = '';
-            
-            if (profileData.contacts && profileData.contacts.length > 0) {
-                profileData.contacts.forEach(item => {
-                    const btn = document.createElement('div');
-                    btn.className = 'option-btn';
-                    btn.innerHTML = `📱 ${item.label}`;
-                    btn.onclick = () => window.open(item.value, '_blank');
-                    container.appendChild(btn);
-                });
-            } else {
-                container.innerHTML = '<div class="info-item">Tidak ada data</div>';
-            }
+        function renderCustomMenuList() {
+            const listHtml = profileData.customMenus.map((menu, index) => {
+                const itemsHtml = menu.items.map((item, itemIndex) => `
+                    <div class="sub-item">
+                        ${item.label}: ${item.link}
+                        <button class="delete-btn" onclick="deleteMenuItem(${index}, ${itemIndex})">Hapus</button>
+                    </div>
+                `).join('');
+
+                return `
+                    <div class="custom-menu-card">
+                        <h4>${menu.title}</h4>
+                        <p>Icon: ${menu.icon}</p>
+                        <div class="sub-item-list">${itemsHtml}</div>
+                        <button onclick="showAddItemForm(${index})">Tambah Item</button>
+                        <button class="delete-btn" onclick="deleteMenu(${index})">Hapus Menu</button>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('customMenuList').innerHTML = listHtml;
         }
 
-        // Update Email modal
-        function updateEmailModal() {
-            const container = document.getElementById('emailContent');
-            container.innerHTML = '';
-            
-            if (profileData.emails && profileData.emails.length > 0) {
-                profileData.emails.forEach(item => {
-                    const btn = document.createElement('div');
-                    btn.className = 'option-btn';
-                    btn.innerHTML = `✉️ ${item.label}`;
-                    btn.onclick = () => window.location.href = `mailto:${item.value}`;
-                    container.appendChild(btn);
-                });
-            } else {
-                container.innerHTML = '<div class="info-item">Tidak ada data</div>';
-            }
-        }
+        function addNewMenu() {
+            const title = document.getElementById('newMenuTitle').value.trim();
+            const icon = document.getElementById('newMenuIcon').value.trim();
 
-        // Update Social modal
-        function updateSocialModal() {
-            const container = document.getElementById('socialContent');
-            container.innerHTML = '';
-            
-            if (profileData.social && profileData.social.length > 0) {
-                profileData.social.forEach(item => {
-                    const btn = document.createElement('div');
-                    btn.className = 'option-btn';
-                    btn.innerHTML = `📸 ${item.label}`;
-                    btn.onclick = () => window.open(item.value, '_blank');
-                    container.appendChild(btn);
-                });
-            } else {
-                container.innerHTML = '<div class="info-item">Tidak ada data</div>';
+            if (!title || !icon) {
+                alert('Nama menu dan icon harus diisi!');
+                return;
             }
-        }
 
-        // Update WA Groups modal
-        function updateWAModal() {
-            const container = document.getElementById('waContent');
-            container.innerHTML = '';
-            
-            if (profileData.waGroups && profileData.waGroups.length > 0) {
-                profileData.waGroups.forEach(item => {
-                    const btn = document.createElement('div');
-                    btn.className = 'option-btn';
-                    btn.innerHTML = `💬 ${item.label}`;
-                    btn.onclick = () => window.open(item.value, '_blank');
-                    container.appendChild(btn);
-                });
-            } else {
-                container.innerHTML = '<div class="info-item">Tidak ada data</div>';
-            }
-        }
-
-        // Update images
-        function updateImages() {
-            // Update main profile picture
-            const mainProfilePic = document.getElementById('mainProfilePic');
-            if (mainProfilePic && profileData.images.profile) {
-                mainProfilePic.style.backgroundImage = `url('${profileData.images.profile}')`;
-            }
-            
-            // Update menu icons
-            const icons = [
-                { id: 'aboutIcon', url: profileData.images.about },
-                { id: 'contactIcon', url: profileData.images.contact },
-                { id: 'emailIcon', url: profileData.images.email },
-                { id: 'socialIcon', url: profileData.images.social },
-                { id: 'waIcon', url: profileData.images.wa }
-            ];
-            
-            icons.forEach(icon => {
-                const element = document.getElementById(icon.id);
-                if (element && icon.url) {
-                    element.style.backgroundImage = `url('${icon.url}')`;
-                }
+            profileData.customMenus.push({
+                title: title,
+                icon: icon,
+                items: []
             });
-            
-            // Update preview images
-            updateImagePreviews();
+
+            document.getElementById('newMenuTitle').value = '';
+            document.getElementById('newMenuIcon').value = '';
+
+            applyData();
+            saveData();
         }
 
-        // Update form inputs with current data
-        function updateForms() {
-            // Update About Me list
-            updateAboutList();
-            
-            // Update Contact list
-            updateContactList();
-            
-            // Update Email list
-            updateEmailList();
-            
-            // Update Social list
-            updateSocialList();
-            
-            // Update WA Groups list
-            updateWAList();
-            
-            // Update image inputs
-            updateImageInputs();
-            
-            // Update preview images
-            updateImagePreviews();
-        }
+        function showAddItemForm(menuIndex) {
+            const label = prompt('Masukkan label tombol (contoh: Telegram 1):');
+            if (!label) return;
 
-        function updateAboutList() {
-            const container = document.getElementById('aboutList');
-            container.innerHTML = '';
-            
-            if (profileData.about && profileData.about.length > 0) {
-                profileData.about.forEach((item, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'about-item';
-                    div.innerHTML = `
-                        <div class="about-row">
-                            <input type="text" class="about-label" placeholder="Label (contoh: Nama)" value="${item.label || ''}" onchange="updateAboutItem(${index}, 'label', this.value)">
-                            <button class="delete-btn" type="button" onclick="removeAboutItem(${index})">Hapus</button>
-                        </div>
-                        <div class="about-row">
-                            <input type="text" class="about-value" placeholder="Value (contoh: Ilham Fadilah)" value="${item.value || ''}" onchange="updateAboutItem(${index}, 'value', this.value)">
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-            }
-        }
+            const link = prompt('Masukkan link (contoh: https://t.me/username):');
+            if (!link) return;
 
-        function updateContactList() {
-            const container = document.getElementById('contactList');
-            container.innerHTML = '';
-            
-            if (profileData.contacts && profileData.contacts.length > 0) {
-                profileData.contacts.forEach((item, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'about-item';
-                    div.innerHTML = `
-                        <div class="about-row">
-                            <input type="text" class="contact-label" placeholder="Label (contoh: WhatsApp 1)" value="${item.label || ''}" onchange="updateContactItem(${index}, 'label', this.value)">
-                            <button class="delete-btn" type="button" onclick="removeContactItem(${index})">Hapus</button>
-                        </div>
-                        <div class="about-row">
-                            <input type="text" class="contact-value" placeholder="URL WhatsApp" value="${item.value || ''}" onchange="updateContactItem(${index}, 'value', this.value)">
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-            }
-        }
-
-        function updateEmailList() {
-            const container = document.getElementById('emailList');
-            container.innerHTML = '';
-            
-            if (profileData.emails && profileData.emails.length > 0) {
-                profileData.emails.forEach((item, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'about-item';
-                    div.innerHTML = `
-                        <div class="about-row">
-                            <input type="text" class="email-label" placeholder="Label (contoh: Email 1)" value="${item.label || ''}" onchange="updateEmailItem(${index}, 'label', this.value)">
-                            <button class="delete-btn" type="button" onclick="removeEmailItem(${index})">Hapus</button>
-                        </div>
-                        <div class="about-row">
-                            <input type="email" class="email-value" placeholder="Alamat Email" value="${item.value || ''}" onchange="updateEmailItem(${index}, 'value', this.value)">
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-            }
-        }
-
-        function updateSocialList() {
-            const container = document.getElementById('socialList');
-            container.innerHTML = '';
-            
-            if (profileData.social && profileData.social.length > 0) {
-                profileData.social.forEach((item, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'about-item';
-                    div.innerHTML = `
-                        <div class="about-row">
-                            <input type="text" class="social-label" placeholder="Label (contoh: Instagram)" value="${item.label || ''}" onchange="updateSocialItem(${index}, 'label', this.value)">
-                            <button class="delete-btn" type="button" onclick="removeSocialItem(${index})">Hapus</button>
-                        </div>
-                        <div class="about-row">
-                            <input type="text" class="social-value" placeholder="URL Sosial Media" value="${item.value || ''}" onchange="updateSocialItem(${index}, 'value', this.value)">
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-            }
-        }
-
-        function updateWAList() {
-            const container = document.getElementById('waList');
-            container.innerHTML = '';
-            
-            if (profileData.waGroups && profileData.waGroups.length > 0) {
-                profileData.waGroups.forEach((item, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'about-item';
-                    div.innerHTML = `
-                        <div class="about-row">
-                            <input type="text" class="wa-label" placeholder="Label (contoh: Grup WhatsApp 1)" value="${item.label || ''}" onchange="updateWAItem(${index}, 'label', this.value)">
-                            <button class="delete-btn" type="button" onclick="removeWAItem(${index})">Hapus</button>
-                        </div>
-                        <div class="about-row">
-                            <input type="text" class="wa-value" placeholder="URL Grup WhatsApp" value="${item.value || ''}" onchange="updateWAItem(${index}, 'value', this.value)">
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-            }
-        }
-
-        function updateImageInputs() {
-            if (!profileData.images) profileData.images = {};
-            
-            document.getElementById('editProfilePic').value = profileData.images.profile || '';
-            document.getElementById('editAboutIcon').value = profileData.images.about || '';
-            document.getElementById('editContactIcon').value = profileData.images.contact || '';
-            document.getElementById('editEmailIcon').value = profileData.images.email || '';
-            document.getElementById('editSocialIcon').value = profileData.images.social || '';
-            document.getElementById('editWAIcon').value = profileData.images.wa || '';
-        }
-
-        function updateImagePreviews() {
-            if (!profileData.images) profileData.images = {};
-            
-            const images = profileData.images;
-            
-            const previews = [
-                { id: 'profilePicPreview', url: images.profile },
-                { id: 'aboutIconPreview', url: images.about },
-                { id: 'contactIconPreview', url: images.contact },
-                { id: 'emailIconPreview', url: images.email },
-                { id: 'socialIconPreview', url: images.social },
-                { id: 'waIconPreview', url: images.wa }
-            ];
-            
-            previews.forEach(preview => {
-                const element = document.getElementById(preview.id);
-                if (element && preview.url) {
-                    element.style.backgroundImage = `url('${preview.url}')`;
-                } else {
-                    element.style.backgroundImage = 'none';
-                }
+            profileData.customMenus[menuIndex].items.push({
+                label: label,
+                link: link
             });
+
+            applyData();
+            saveData();
         }
 
-        function updateProfileDataFromForms() {
-            // Update images from inputs
-            if (!profileData.images) profileData.images = {};
-            
-            profileData.images.profile = document.getElementById('editProfilePic').value;
-            profileData.images.about = document.getElementById('editAboutIcon').value;
-            profileData.images.contact = document.getElementById('editContactIcon').value;
-            profileData.images.email = document.getElementById('editEmailIcon').value;
-            profileData.images.social = document.getElementById('editSocialIcon').value;
-            profileData.images.wa = document.getElementById('editWAIcon').value;
+        function deleteMenuItem(menuIndex, itemIndex) {
+            if (confirm('Hapus item ini?')) {
+                profileData.customMenus[menuIndex].items.splice(itemIndex, 1);
+                applyData();
+                saveData();
+            }
         }
 
-        // Sidebar functions
+        function deleteMenu(menuIndex) {
+            if (confirm('Hapus menu ini beserta semua item nya?')) {
+                profileData.customMenus.splice(menuIndex, 1);
+                applyData();
+                saveData();
+            }
+        }
+
+        function showCustomPage(index) {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('mainPage').style.display = 'none';
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('customPage' + index).classList.add('active');
+        }
+
         function toggleSidebar() {
-            document.getElementById('sidebarMenu').classList.toggle('active');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
         }
 
-        function closeSidebar() {
-            document.getElementById('sidebarMenu').classList.remove('active');
+        function showPage(pageId) {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('mainPage').style.display = 'none';
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
         }
 
-        // Modal functions
-        function showAboutMe() {
-            document.getElementById('modalAboutMe').classList.add('active');
+        function closePage() {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('mainPage').style.display = 'block';
         }
 
-        function showKontak() {
-            document.getElementById('modalKontak').classList.add('active');
-        }
-
-        function showEmail() {
-            document.getElementById('modalEmail').classList.add('active');
-        }
-
-        function showSosmed() {
-            document.getElementById('modalSosmed').classList.add('active');
-        }
-
-        function showGrupWA() {
-            document.getElementById('modalGrupWA').classList.add('active');
-        }
-
-        function showMyAccount() {
-            document.getElementById('modalLogin').classList.add('active');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        // Login function
-        function login(event) {
-            event.preventDefault();
+        function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
             if (username === 'ilham' && password === 'ilhamxander374801649+_) ;$1! -93') {
-                closeModal('modalLogin');
-                showManagement();
+                document.getElementById('pageLogin').classList.remove('active');
+                document.getElementById('pageAdmin').classList.add('active');
+                loadAdminData();
             } else {
                 alert('Username atau password salah!');
             }
         }
 
-        // Management functions
-        function showManagement() {
-            updateForms();
-            document.getElementById('modalManagement').classList.add('active');
+        function loadAdminData() {
+            document.getElementById('editNama').value = profileData.nama;
+            document.getElementById('editPanggilan').value = profileData.panggilan;
+            document.getElementById('editNick').value = profileData.nick;
+            document.getElementById('editEmail1').value = profileData.email1;
+            document.getElementById('editEmail2').value = profileData.email2;
+            document.getElementById('editIg').value = profileData.ig;
+            document.getElementById('editGrup1').value = profileData.grup1;
+            document.getElementById('editGrup2').value = profileData.grup2;
+            document.getElementById('editGrup3').value = profileData.grup3;
+            document.getElementById('newProfileUrl').value = profileData.profilePhoto;
+            document.getElementById('newBgUrl').value = profileData.background;
+            document.getElementById('iconAboutUrl').value = profileData.iconAbout;
+            document.getElementById('iconKontakUrl').value = profileData.iconKontak;
+            document.getElementById('iconEmailUrl').value = profileData.iconEmail;
+            document.getElementById('iconSosmedUrl').value = profileData.iconSosmed;
+            document.getElementById('iconGrupUrl').value = profileData.iconGrup;
         }
 
-        function showTab(tabId) {
-            // Hide all tabs
-            document.querySelectorAll('.management-section').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remove active class from all tab buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Show selected tab
-            document.getElementById(tabId).classList.add('active');
-            
-            // Add active class to clicked button
-            event.target.classList.add('active');
+        function updateProfilePhoto() {
+            profileData.profilePhoto = document.getElementById('newProfileUrl').value;
+            applyData();
+            saveData();
         }
 
-        // About Me CRUD functions
-        function addAboutItem() {
-            if (!profileData.about) profileData.about = [];
-            profileData.about.push({ label: "Label Baru", value: "Value Baru" });
-            updateAboutList();
-            showStatus('Item about ditambahkan', 'success');
+        function updateBackground() {
+            profileData.background = document.getElementById('newBgUrl').value;
+            applyData();
+            saveData();
         }
 
-        function updateAboutItem(index, field, value) {
-            if (profileData.about && profileData.about[index]) {
-                profileData.about[index][field] = value;
-            }
+        function updateAbout() {
+            profileData.nama = document.getElementById('editNama').value;
+            profileData.panggilan = document.getElementById('editPanggilan').value;
+            profileData.nick = document.getElementById('editNick').value;
+            applyData();
+            saveData();
         }
 
-        function removeAboutItem(index) {
-            if (profileData.about && profileData.about.length > 1) {
-                profileData.about.splice(index, 1);
-                updateAboutList();
-                showStatus('Item about dihapus', 'success');
-            } else {
-                showStatus('Minimal harus ada 1 item about', 'error');
-            }
+        function updateEmails() {
+            profileData.email1 = document.getElementById('editEmail1').value;
+            profileData.email2 = document.getElementById('editEmail2').value;
+            applyData();
+            saveData();
         }
 
-        // Contact CRUD functions
-        function addContactItem() {
-            if (!profileData.contacts) profileData.contacts = [];
-            profileData.contacts.push({ label: "Kontak Baru", value: "https://wa.me/" });
-            updateContactList();
-            showStatus('Kontak ditambahkan', 'success');
+        function updateIg() {
+            profileData.ig = document.getElementById('editIg').value;
+            applyData();
+            saveData();
         }
 
-        function updateContactItem(index, field, value) {
-            if (profileData.contacts && profileData.contacts[index]) {
-                profileData.contacts[index][field] = value;
-            }
+        function updateGrups() {
+            profileData.grup1 = document.getElementById('editGrup1').value;
+            profileData.grup2 = document.getElementById('editGrup2').value;
+            profileData.grup3 = document.getElementById('editGrup3').value;
+            applyData();
+            saveData();
         }
 
-        function removeContactItem(index) {
-            if (profileData.contacts) {
-                profileData.contacts.splice(index, 1);
-                updateContactList();
-                showStatus('Kontak dihapus', 'success');
-            }
+        function updateIcons() {
+            profileData.iconAbout = document.getElementById('iconAboutUrl').value;
+            profileData.iconKontak = document.getElementById('iconKontakUrl').value;
+            profileData.iconEmail = document.getElementById('iconEmailUrl').value;
+            profileData.iconSosmed = document.getElementById('iconSosmedUrl').value;
+            profileData.iconGrup = document.getElementById('iconGrupUrl').value;
+            applyData();
+            saveData();
         }
 
-        // Email CRUD functions
-        function addEmailItem() {
-            if (!profileData.emails) profileData.emails = [];
-            profileData.emails.push({ label: "Email Baru", value: "email@example.com" });
-            updateEmailList();
-            showStatus('Email ditambahkan', 'success');
+        function logout() {
+            document.getElementById('pageAdmin').classList.remove('active');
+            document.getElementById('mainPage').style.display = 'block';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
         }
 
-        function updateEmailItem(index, field, value) {
-            if (profileData.emails && profileData.emails[index]) {
-                profileData.emails[index][field] = value;
-            }
-        }
-
-        function removeEmailItem(index) {
-            if (profileData.emails) {
-                profileData.emails.splice(index, 1);
-                updateEmailList();
-                showStatus('Email dihapus', 'success');
-            }
-        }
-
-        // Social CRUD functions
-        function addSocialItem() {
-            if (!profileData.social) profileData.social = [];
-            profileData.social.push({ label: "Sosmed Baru", value: "https://" });
-            updateSocialList();
-            showStatus('Sosmed ditambahkan', 'success');
-        }
-
-        function updateSocialItem(index, field, value) {
-            if (profileData.social && profileData.social[index]) {
-                profileData.social[index][field] = value;
-            }
-        }
-
-        function removeSocialItem(index) {
-            if (profileData.social) {
-                profileData.social.splice(index, 1);
-                updateSocialList();
-                showStatus('Sosmed dihapus', 'success');
-            }
-        }
-
-        // WA Group CRUD functions
-        function addWAItem() {
-            if (!profileData.waGroups) profileData.waGroups = [];
-            profileData.waGroups.push({ label: "Grup WA Baru", value: "LINK_GRUP_WA" });
-            updateWAList();
-            showStatus('Grup WA ditambahkan', 'success');
-        }
-
-        function updateWAItem(index, field, value) {
-            if (profileData.waGroups && profileData.waGroups[index]) {
-                profileData.waGroups[index][field] = value;
-            }
-        }
-
-        function removeWAItem(index) {
-            if (profileData.waGroups) {
-                profileData.waGroups.splice(index, 1);
-                updateWAList();
-                showStatus('Grup WA dihapus', 'success');
-            }
-        }
-
-        // Close modal saat klik di luar modal content
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadData();
-            
-            // Add real-time preview for image inputs
-            const imageInputs = ['editProfilePic', 'editAboutIcon', 'editContactIcon', 'editEmailIcon', 'editSocialIcon', 'editWAIcon'];
-            imageInputs.forEach(id => {
-                const input = document.getElementById(id);
-                if (input) {
-                    input.addEventListener('input', function() {
-                        const previewId = id + 'Preview';
-                        const preview = document.getElementById(previewId);
-                        if (preview && this.value) {
-                            preview.style.backgroundImage = `url('${this.value}')`;
-                        }
-                    });
-                }
-            });
-            
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                const sidebar = document.getElementById('sidebarMenu');
-                const hamburger = document.querySelector('.hamburger-menu');
-                
-                if (sidebar.classList.contains('active') && 
-                    !sidebar.contains(event.target) && 
-                    !hamburger.contains(event.target)) {
-                    closeSidebar();
-                }
-            });
-            
-            // Initialize semua modal dengan data
-            updateUI();
-        });
-
-        // Prevent form submission on Enter in management
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter' && event.target.type !== 'submit') {
-                event.preventDefault();
-            }
-        });
+        loadData();
     </script>
 </body>
 </html>
